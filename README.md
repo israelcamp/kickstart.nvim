@@ -239,3 +239,12 @@ sudo pacman -S --noconfirm --needed gcc make git ripgrep fd unzip neovim
 ```
 </details>
 
+## LSPs
+
+If I go `:Mason` inside nvim then I can search for the language features.
+
+
+## Lua
+
+I need Lua to run the plugins and luarocks. In Fedora it was simple as `sudo dnf install lua luarocks`
+
