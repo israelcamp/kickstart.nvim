@@ -262,12 +262,13 @@ require('lazy').setup({
     end,
   },
   'scottmckendry/cyberdream.nvim',
-  'nvim-tree/nvim-tree.lua',
+  { 'nvim-tree/nvim-tree.lua', opts = {} },
   { 'nvim-tree/nvim-web-devicons', opts = {} },
   'github/copilot.vim', -- AI pair programmer
   'folke/tokyonight.nvim', -- Theme inspired by Atom
   'mg979/vim-visual-multi',
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
+  -- WARNING: maybe this is buging my ident
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
 
   -- NOTE: Plugins can also be added by using a table,
@@ -790,10 +791,11 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { 'isort', 'black' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        html = { 'prettierd', 'prettier', stop_after_first = true },
       },
     },
   },
@@ -915,7 +917,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'onedark'
     end,
   },
 
@@ -995,17 +997,17 @@ require('lazy').setup({
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'kickstart.plugins.indent_line',
+  require 'kickstart.plugins.lint',
+  require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
@@ -1037,41 +1039,11 @@ require('lazy').setup({
 -- vim: ts=2 sts=2 sw=2 et
 --
 --
---
--- [[ NvimTree ]]
--- disable netrw at the very start of your init.lua
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
--- optionally enable 24-bit colour
-vim.opt.termguicolors = true
-
--- empty setup using defaults
-require('nvim-tree').setup()
-
--- OR setup with some options
-require('nvim-tree').setup {
-  sort = {
-    sorter = 'case_sensitive',
-  },
-  view = {
-    width = 30,
-  },
-  renderer = {
-    group_empty = true,
-  },
-  filters = {
-    dotfiles = true,
-  },
-}
-
--- [[ Some configs ]]
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'html',
+  pattern = 'lua',
   callback = function()
-    vim.opt_local.tabstop = 1
-    vim.opt_local.softtabstop = 1
-    vim.opt_local.shiftwidth = 1
+    vim.opt_local.tabstop = 4
+    vim.opt_local.shiftwidth = 4
     vim.opt_local.expandtab = true
   end,
-})
+}) --
